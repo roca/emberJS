@@ -17,9 +17,14 @@ App.IndexController = Ember.Controller.extend({
 
 
 App.AboutController = Ember.Controller.extend({
-   // productsCount: 6,
-   // logo: 'images/logo.png',
-   // time: function() {
-   // 		return (new Date()).toDateString()
-   // }.property()
+  contactName: 'Romel Campbell',
+  avatar: 'images/avatar.png',
+  open: function() {
+      var iDay = (new Date()).getDay();
+      var message = "open";
+       if(iDay == 0) {
+        message = "closed"
+       }
+      return message;
+   }.property()
 });
