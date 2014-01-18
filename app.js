@@ -5,6 +5,8 @@ var App = Ember.Application.create({
 App.Router.map(function() {
     this.route('about');
     this.route('credits',{ path: '/thanks' });
+    this.resource('products');
+    this.resource('contacts');
 });
 
 App.IndexController = Ember.Controller.extend({
@@ -15,6 +17,7 @@ App.IndexController = Ember.Controller.extend({
    }.property()
 });
 
+App.ProductsRoute = Ember.Route.extend({});
 
 App.AboutController = Ember.Controller.extend({
   contactName: 'Romel Campbell',
@@ -28,3 +31,44 @@ App.AboutController = Ember.Controller.extend({
       return message;
    }.property()
 });
+
+App.PRODUCTS = [
+     {
+       title:'Flint',
+       price: 10.99,
+       description:'Flint stone',
+       isOnSale:false,
+       image: 'images/products/flint.png',
+     },
+     {
+       title: 'Kindling',
+       price: 5.99,
+       description:'Kindling wood',
+       isOnSale:true,
+       image: 'images/products/kindling.png',
+     }
+
+];
+
+App.ProductsRoute = Ember.Route.extend({
+  model: function () { return App.PRODUCTS; }
+});
+
+App.ContactsRoute = Ember.Route.extend({
+  model: function () { return App.CONTACTS; }
+});
+
+App.CONTACTS = [
+     {
+       name:'giamia',
+       avatar: 'images/contacts/giamia.png',
+       about:'giamia'
+     },
+     {
+       name:'anostagia',
+       avatar: 'images/contacts/anostagia.png',
+       about:'anostagia'
+     }
+
+];
+
