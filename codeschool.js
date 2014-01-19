@@ -3,10 +3,15 @@ var App = Ember.Application.create({
 });
 App.Router.map(function() {
   this.route('credits', { path: '/thanks' });
-  this.route('about');
-  this.resource('products');
-  this.resource('contacts');
+  this.resource('products', function() {
+    this.resource('product', { path: '/:title' });
+  });
+  this.resource('contacts',function () {
+      this.resource('contact',{path: '/:name'});
+    });
+  
 });
+
 App.IndexController = Ember.Controller.extend({
   productsCount: 6,
   logo: 'images/logo-small.png',
@@ -14,7 +19,7 @@ App.IndexController = Ember.Controller.extend({
     return (new Date()).toDateString();
   }.property()
 });
-App.AboutController = Ember.Controller.extend({
+App.ContactsIndexController = Ember.Controller.extend({
   contactName: 'Anostagia',
   avatar: 'images/avatar.png',
   open: function() {
@@ -27,6 +32,23 @@ App.ProductsRoute = Ember.Route.extend({
     return App.PRODUCTS;
   }
 });
+App.ProductRoute = Ember.Route.extend({
+  model: function(params) {
+    return App.PRODUCTS.findBy('title', params.title); 
+  }
+});
+
+App.ContactsRoute = Ember.Route.extend({
+  model: function() {
+    return App.CONTACTS;
+  }
+});
+App.ContactRoute = Ember.Route.extend({
+  model: function(params) {
+    return App.CONTACTS.findBy('name', params.name);
+  }
+});
+
 App.PRODUCTS = [
   {
     title: 'Flint',
@@ -56,9 +78,3 @@ App.CONTACTS = [
     avatar: 'images/contacts/anostagia.png'
   }
 ];
-
-App.ContactsRoute = Ember.Route.extend({
-  model: function() {
-    return App.CONTACTS;
-  }
-});
