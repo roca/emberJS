@@ -6,7 +6,9 @@ App.Router.map(function() {
     this.route('about');
     this.route('credits',{ path: '/thanks' });
     this.resource('products');
+    this.resource('product',{path: 'products/:title'});
     this.resource('contacts');
+    this.resource('contact',{path: 'contacts/:name'});
 });
 
 App.IndexController = Ember.Controller.extend({
@@ -17,7 +19,6 @@ App.IndexController = Ember.Controller.extend({
    }.property()
 });
 
-App.ProductsRoute = Ember.Route.extend({});
 
 App.AboutController = Ember.Controller.extend({
   contactName: 'Romel Campbell',
@@ -54,9 +55,22 @@ App.ProductsRoute = Ember.Route.extend({
   model: function () { return App.PRODUCTS; }
 });
 
+App.ProductRoute = Ember.Route.extend({
+  model: function (params) { 
+  	return App.PRODUCTS.findBy('title',params.title); 
+  }
+});
+
 App.ContactsRoute = Ember.Route.extend({
   model: function () { return App.CONTACTS; }
 });
+
+App.ContactRoute = Ember.Route.extend({
+  model: function (params) { 
+  	return App.CONTACTS.findBy('name',params.name); 
+  }
+});
+
 
 App.CONTACTS = [
      {
