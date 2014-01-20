@@ -128,10 +128,10 @@
     
     <h3>Products crafted</h3>
     <ul>
-        {{#each product in products}}
+        {{#each products}}
           <li>
           {{#link-to 'product' this classNames='list-group-item'}}
-              {{title}}
+              <strong>{{title}}:</strong> {{description}}
             {{/link-to}}
           </li>
           {{else}}
