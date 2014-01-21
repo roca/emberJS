@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>
+Code School - Warming Up With Ember.js
+</title>
   <link href='bootstrap.css' rel='stylesheet' />
   <link href='application.css' rel='stylesheet' />
   <script src='jquery.js'></script>
@@ -43,6 +46,23 @@
         {{/link-to}}
       </p>
     </div>
+
+{{#each onSale}}
+<div class='col-sm-4'> 
+   <img {{bind-attr src='image'}} class='img-thumbnail col-sm-5'/> 
+   <div class='col-sm-7'> 
+     <h2>{{title}}</h2> 
+     <p class="product-description">{{description}}</p> 
+     <p>
+       {{#link-to 'product' this }}
+          Buy for ${{price}}
+       {{/link-to}}
+     </p>
+   </div>
+  </div>
+{{/each}}
+
+
     <p class='pull-right text-muted'>Rendered on {{time}}</p> 
   </script>
   <script type='text/x-handlebars' data-template-name='contacts/index'>
@@ -99,6 +119,23 @@
   </script>
   <script type='text/x-handlebars' data-template-name='products/index'>
     <p class='text-muted'>Choose a product from those on the left!</p>
+
+    {{#each deals}}
+<div class='col-sm-4'> 
+   <img {{bind-attr src='image'}} class='img-thumbnail col-sm-5'/> 
+   <div class='col-sm-7'> 
+     <h2>{{title}}</h2> 
+     <p class="product-description">{{description}}</p> 
+     <p>
+       {{#link-to 'product' this }}
+          Buy for ${{price}}
+       {{/link-to}}
+     </p>
+   </div>
+  </div>
+{{/each}}
+
+
   </script>
   <script type="text/x-handlebars" data-template-name='contacts'>
     <div class='row'>
