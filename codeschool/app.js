@@ -5,6 +5,8 @@ App.Router.map(function() {
   this.route('credits', { path: '/thanks' });
   this.resource('products', function() {
     this.resource('product', { path: '/:product_id' });
+    this.route('onsale');
+    this.route('deals');
   });
   this.resource('contacts', function() {
     this.resource('contact', { path: '/:contact_id' });
@@ -18,33 +20,22 @@ App.IndexController = Ember.ArrayController.extend({
     return (new Date()).toDateString();
   }.property(),
   onSale: function() {
-      return this.filterBy('isOnSale').slice(0,3);
+    return this.filterBy('isOnSale').slice(0,3);
   }.property('@each.isOnSale')
 });
-
-App.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.findAll('product');
-  }
-
-  });
-
-App.ContactsIndexController = Ember.ObjectController.extend({
+App.ContactsIndexController = Ember.Controller.extend({
   contactName: 'Anostagia',
   avatar: 'images/avatar.png',
   open: function() {
     return ((new Date()).getDay() === 0) ? "Closed" : "Open";
   }.property()
 });
-
-App.ContactsIndexRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.find('contact');
-  }
-});
-
 App.ProductsController = Ember.ArrayController.extend({
   sortProperties: ['title']
+});
+App.ContactsController = Ember.ArrayController.extend({
+  sortProperties: ['name'],
+  contactsCount: Ember.computed.alias('length')
 });
 
 App.ProductsRoute = Ember.Route.extend({
@@ -52,31 +43,32 @@ App.ProductsRoute = Ember.Route.extend({
     return this.store.findAll('product');
   }
 });
-
-App.ProductsIndexController = Ember.ArrayController.extend({
-  deals: function (){
-
-
-      return this.filter(function(product){
-         return product.get('price') < 500;
-      });
-  }.property('@each.price')
-});
-
-App.ProductsIndexRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.findAll('product');
-  }
-});
-
-App.ContactsController = Ember.ArrayController.extend({
-  sortProperties: ['name']
-});
-
 App.ContactsRoute = Ember.Route.extend({
   model: function() {
     return this.store.findAll('contact');
   }
+});
+App.IndexRoute = Ember.Route.extend({
+  model: function(){
+    return this.store.findAll('product');
+  }
+});
+App.ProductsIndexRoute = Ember.Route.extend({
+  model: function(){
+    return this.store.findAll('product');
+  }
+});
+App.ProductsOnsaleRoute = Ember.Route.extend({
+  model: function(){
+    return this.modelFor('products').filterBy('isOnSale');
+  }
+});
+App.ProductsDealsRoute = Ember.Route.extend({
+  model: function () {
+    return this.modelFor('products').filter(function(product){
+         return product.get('price') < 500;
+      });
+}
 });
 
 App.ApplicationAdapter = DS.FixtureAdapter.extend();
