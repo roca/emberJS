@@ -48,18 +48,7 @@ Code School - Warming Up With Ember.js
     </div> 
     <div class='row'>
       {{#each onSale}}
-        <div class='col-sm-4'>
-          <img {{bind-attr src='image'}} class='img-thumbnail col-sm-5' />
-          <div class='col-sm-7'>
-            <h2>{{title}}</h2>
-            <span class='label label-warning'>
-              {{#link-to 'products.onsale'}}On Sale{{/link-to}}
-            </span>
-            <p class='product-description'>{{description}}</p>
-            <p>{{#link-to 'product' this class='btn btn-success'}}
-              Buy for ${{price}}{{/link-to}}</p>
-          </div>
-        </div>
+        {{product-details product=this classNames='col-sm-4'}}
       {{/each}}
     </div>
     <p class='pull-right text-muted'>Rendered on {{time}}</p>
@@ -124,15 +113,7 @@ Code School - Warming Up With Ember.js
     <h1>Products!</h1>
     <ul class='list-unstyled'>
       {{#each}}
-        <li class='row'>
-          <img {{bind-attr src='image'}} class='img-thumbnail col-sm-5' />
-          <div class='col-sm-7'>
-            <h2>{{title}}</h2>
-            <p class='product-description'>{{description}}</p>
-            <p>{{#link-to 'product' this class='btn btn-success'}}
-              Buy for ${{price}}{{/link-to}}</p>
-          </div>
-        </li>
+        {{product-details product=this tagName='li' classNames="row"}}
       {{/each}}
     </ul>
   </script>
@@ -174,15 +155,7 @@ Code School - Warming Up With Ember.js
     <h1>Products On Sale</h1>
     <ul class='list-unstyled'>
       {{#each}}
-        <li class='row'>
-          <img {{bind-attr src='image'}} class='img-thumbnail col-sm-5' />
-          <div class='col-sm-7'>
-            <h2>{{title}}</h2>
-            <p class='product-description'>{{description}}</p>
-            <p>{{#link-to 'product' this class='btn btn-success'}}
-              Buy for ${{price}}{{/link-to}}</p>
-          </div>
-        </li>
+        {{product-details product=this tagName='li' classNames="row"}}
       {{/each}}
     </ul>
   </script>
@@ -190,17 +163,19 @@ Code School - Warming Up With Ember.js
     <h1>Todays Product Deals!</h1>
     <ul class='list-unstyled'>
       {{#each}}
-        <li class='row'>
-          <img {{bind-attr src='image'}} class='img-thumbnail col-sm-5' />
-          <div class='col-sm-7'>
-            <h2>{{title}}</h2>
-            <p class='product-description'>{{description}}</p>
-            <p>{{#link-to 'product' this class='btn btn-success'}}
-              Buy for ${{price}}{{/link-to}}</p>
-          </div>
-        </li>
+        {{product-details product=this tagName='li' classNames="row"}}
       {{/each}}
     </ul>
+  </script>
+
+  <script type='text/x-handlebars' data-template-name='components/product-details'>
+          <img {{bind-attr src=product.image}} class='img-thumbnail col-sm-5' />
+          <div class='col-sm-7'>
+            <h2>{{product.title}}</h2>
+            <p class='product-description'>{{product.description}}</p>
+            <p>{{#link-to 'product' product class='btn btn-success'}}
+              Buy for ${{product.price}}{{/link-to}}</p>
+          </div>
   </script>
 </body>
 
