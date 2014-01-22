@@ -45,7 +45,7 @@ Code School - Warming Up With Ember.js
           Browse All {{productsCount}} Items &raquo;
         {{/link-to}}
       </p>
-    </div> 
+    </div>
     <div class='row'>
       {{#each onSale}}
         {{product-details product=this classNames='col-sm-4'}}
@@ -93,8 +93,6 @@ Code School - Warming Up With Ember.js
         <h2>{{title}}</h2>
         <h3 class='text-success'>${{price}}</h3>
         <p class='text-muted'>{{description}}</p>
-        <p>Finely crafted by {{#link-to 'contact' crafter}}{{crafter.name}}{{/link-to}}.</p>
-        
         <h3>Reviews</h3>
         <ul>
         {{#each reviews}}
@@ -103,7 +101,12 @@ Code School - Warming Up With Ember.js
           <li><p class='text-muted'><em>No reviews yet. Be the first to write one!</em></p></li>
         {{/each}}
         </ul>
+        <hr/>
+        <p>Finely crafted by {{#link-to 'contact' crafter}}{{crafter.name}}{{/link-to}}.</p>
+
+        {{contact-details contact=crafter classNames="row"}}
       </div>
+
       <div class='col-sm-5'>
         <img {{bind-attr src='image'}} class='img-thumbnail img-rounded'/>
       </div>
@@ -167,6 +170,12 @@ Code School - Warming Up With Ember.js
       {{/each}}
     </ul>
   </script>
+
+<script type='text/x-handlebars' data-template-name='components/contact-details'>
+        <img {{bind-attr src=contact.avatar alt='name'}} class='img-thumbnail img-rounded'/>
+        <h2>{{contact.name}}</h2>
+        <p>{{contact.about}}</p>
+</script>
 
   <script type='text/x-handlebars' data-template-name='components/product-details'>
           <img {{bind-attr src=product.image}} class='img-thumbnail col-sm-5' />
