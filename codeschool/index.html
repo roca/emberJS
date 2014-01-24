@@ -46,6 +46,7 @@ Code School - Warming Up With Ember.js
         {{/link-to}}
       </p>
     </div> 
+
     <div class='row'>
       {{#each onSale}}
         {{product-details product=this classNames='col-sm-4'}}
@@ -71,9 +72,9 @@ Code School - Warming Up With Ember.js
     <div class='row'>
       <div class='col-sm-3'>
         <div class='list-group'>
-          {{#link-to 'products.deals' classNames='list-group-item'}}Deals{{/link-to}}
-          {{#link-to 'products.onsale' classNames='list-group-item'}}On Sale{{/link-to}}
-        </div>
+        {{#link-to 'products.deals' classNames='list-group-item'}}Deals{{/link-to}}
+        {{#link-to 'products.onsale' classNames='list-group-item'}}On Sale{{/link-to}}
+      </div>
         <div class='list-group'>
           {{#each}}
             {{#link-to 'product' this classNames='list-group-item'}}
@@ -108,12 +109,13 @@ Code School - Warming Up With Ember.js
         <img {{bind-attr src='image'}} class='img-thumbnail img-rounded'/>
       </div>
     </div>
+    {{contact-details contact=crafter className='row'}}
   </script>
   <script type='text/x-handlebars' data-template-name='products/index'>
     <h1>Products!</h1>
     <ul class='list-unstyled'>
       {{#each}}
-        {{product-details product=this tagName='li' classNames="row"}}
+        {{product-details product=this classNames='row' tagName='li'}}
       {{/each}}
     </ul>
   </script>
@@ -155,7 +157,7 @@ Code School - Warming Up With Ember.js
     <h1>Products On Sale</h1>
     <ul class='list-unstyled'>
       {{#each}}
-        {{product-details product=this tagName='li' classNames="row"}}
+        {{product-details product=this classNames='row' tagName='li'}}
       {{/each}}
     </ul>
   </script>
@@ -163,19 +165,34 @@ Code School - Warming Up With Ember.js
     <h1>Todays Product Deals!</h1>
     <ul class='list-unstyled'>
       {{#each}}
-        {{product-details product=this tagName='li' classNames="row"}}
+        {{product-details product=this classNames='row' tagName='li'}}
       {{/each}}
     </ul>
   </script>
-
   <script type='text/x-handlebars' data-template-name='components/product-details'>
-          <img {{bind-attr src=product.image}} class='img-thumbnail col-sm-5' />
-          <div class='col-sm-7'>
-            <h2>{{product.title}}</h2>
-            <p class='product-description'>{{product.description}}</p>
-            <p>{{#link-to 'product' product class='btn btn-success'}}
-              Buy for ${{product.price}}{{/link-to}}</p>
-          </div>
+    <img {{bind-attr src='product.image'}} class='img-thumbnail col-sm-5' />
+    <div class='col-sm-7'>
+      <h2>{{product.title}}</h2>
+      <p class='product-description'>{{product.description}}</p>
+      <p>{{#link-to 'product' product class='btn btn-success'}}
+        Buy for ${{product.price}}{{/link-to}}
+      </p>
+      {{#if hasReviews}}
+        <p class='text-muted'>Read all reviews ({{reviewsCount}}).</p>
+      {{/if}}
+    </div>
+  </script>
+  <script type='text/x-handlebars' data-template-name='components/contact-details'>
+    <div class='col-sm-9'>
+      <h2>About {{contact.name}}</h2>
+      <p>{{contact.about}}</p>
+    </div>
+    <div class='col-sm-3'>
+      <img {{bind-attr src='contact.avatar' alt='contact.name'}} class='img-thumbnail img-rounded'/>
+    </div>
+    {{#if isProductive }}
+             <p class='text-muted'> Number of products  ({{productsCount }}). </p>
+          {{/if}}
   </script>
 </body>
 

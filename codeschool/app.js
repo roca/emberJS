@@ -71,6 +71,22 @@ App.ProductsDealsRoute = Ember.Route.extend({
   }
 });
 
+App.ProductDetailsComponent = Ember.Component.extend({
+  reviewsCount: Ember.computed.alias('product.reviews.length'),
+  hasReviews: function() {
+    return this.get('reviewsCount') > 0;
+  }.property('reviewsCount')
+});
+
+
+App.ContactDetailsComponent = Ember.Component.extend({
+  productsCount: Ember.computed.alias('contact.products.length'),
+  isProductive: function() {
+    return this.get('productsCount') > 3;
+  }.property('productsCount')
+});
+
+
 App.ApplicationAdapter = DS.FixtureAdapter.extend();
 App.Product = DS.Model.extend({
   title: DS.attr('string'),
