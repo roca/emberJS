@@ -96,14 +96,8 @@ Code School - Warming Up With Ember.js
         <p class='text-muted'>{{description}}</p>
         <p>Finely crafted by {{#link-to 'contact' crafter}}{{crafter.name}}{{/link-to}}.</p>
         
-        <h3>Reviews</h3>
-        <ul>
-        {{#each reviews}}
-          <li><p>{{text}}</p></li>
-        {{else}}
-          <li><p class='text-muted'><em>No reviews yet. Be the first to write one!</em></p></li>
-        {{/each}}
-        </ul>
+        {{render 'reviews' reviews}}
+        {{partial 'new-reviews'}}
       </div>
       <div class='col-sm-5'>
         <img {{bind-attr src='image'}} class='img-thumbnail img-rounded'/>
@@ -111,6 +105,29 @@ Code School - Warming Up With Ember.js
     </div>
     {{contact-details contact=crafter className='row'}}
   </script>
+
+  <script type="text/x-handlebars" data-template-name="_new-reviews">
+     <div class="new-review">
+        <h3>Review {{title}}</h3>
+        {{#if text}}
+          <p class='text-muted'>{{text}}</p>
+        {{/if}}
+        {{textarea valueBinding='text'}}
+        <button {{action 'createReview'}} class='btn-primary'>Review</button>
+     </div>
+  </script>
+
+  <script type='text/x-handlebars' data-template-name='reviews'>
+        <h3>Reviews</h3>
+        <ul>
+        {{#each}}
+          <li><p>{{text}}</p></li>
+        {{else}}
+          <li><p class='text-muted'><em>No reviews yet. Be the first to write one!</em></p></li>
+        {{/each}}
+        </ul>
+  </script>
+
   <script type='text/x-handlebars' data-template-name='products/index'>
     <h1>Products!</h1>
     <ul class='list-unstyled'>
@@ -144,15 +161,21 @@ Code School - Warming Up With Ember.js
         <h2>{{name}}</h2>
         <p>{{about}}</p>
 
-        <h3>Products</h3>
-        <ul>
-        {{#each products}}
-          <li>{{#link-to 'product' this}}{{title}}{{/link-to}}</li>
-        {{/each}}
-        </ul>
+        {{render 'contact/products' products}}
       </div>
     </div>
   </script>
+
+<script type='text/x-handlebars' data-template-name='contact/products'>
+        <h3>Products</h3>
+        <ul>
+        {{#each}}
+          <li>{{#link-to 'product' this}}{{title}}{{/link-to}}</li>
+        {{/each}}
+        </ul>
+
+</script>
+
   <script type='text/x-handlebars' data-template-name='products/onsale'>
     <h1>Products On Sale</h1>
     <ul class='list-unstyled'>

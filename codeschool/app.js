@@ -38,6 +38,15 @@ App.ContactsController = Ember.ArrayController.extend({
   contactsCount: Ember.computed.alias('length')
 });
 
+App.ContactProductsController = Ember.ArrayController.extend({
+  sortProperties: ['title']
+});
+
+App.ReviewsController = Ember.ArrayController.extend({
+   sortProperties: ['reviewedAt'],
+   sortAscending: false
+});
+
 App.ProductsRoute = Ember.Route.extend({
   model: function() {
     return this.store.findAll('product');
@@ -76,6 +85,32 @@ App.ProductDetailsComponent = Ember.Component.extend({
   hasReviews: function(){
     return this.get('reviewsCount') > 0;
   }.property('reviewsCount')
+});
+
+App.ProductController = Ember.ObjectController.extend({
+
+     text:'',
+     actions: {
+      createReview: function() {
+        var review = this.store.createRecord('review', {
+            text: this.get('text'),
+            product: this.get('model'),
+            reviewedAt: new Date()
+        });
+        var controller = this;
+        review.save().then(function(review){
+            controller.set('text','');
+            controller.get('model.reviews').addObject(review);
+         });
+      }
+     }
+     
+});
+
+App.ProductView = Ember.View.extend({
+  classNames: ['row' ],
+  classNameBindings: ['isOnSale'],
+  isOnSale: Ember.computed.alias('controller.isOnSale')
 });
 
 App.ContactDetailsComponent = Ember.Component.extend({
